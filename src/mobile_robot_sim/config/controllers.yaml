@@ -7,68 +7,18 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    mecanum_drive_controller:
-      type: mecanum_drive_controller/MecanumDriveController
-
-    lid_controller:
-      type: position_controllers/JointGroupPositionController
+    wheel_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
 
 # -----------------------------------------------------
-# MECANUM WHEEL CONTROLLER
+# WHEEL VELOCITY CONTROLLER
 # -----------------------------------------------------
-mecanum_drive_controller:
-  ros__parameters:
-    use_sim_time: true
-
-    front_left_wheel_command_joint_name: "FL_Joint"
-    front_right_wheel_command_joint_name: "FR_Joint"
-    rear_left_wheel_command_joint_name: "RL_Joint"
-    rear_right_wheel_command_joint_name: "RR_Joint"
-
-    front_left_wheel_state_joint_name: "FL_Joint"
-    front_right_wheel_state_joint_name: "FR_Joint"
-    rear_left_wheel_state_joint_name: "RL_Joint"
-    rear_right_wheel_state_joint_name: "RR_Joint"
-
-    kinematics:
-      base_frame_id: "RobotBody"
-      odom_frame_id: "odom"
-      wheels_radius: 0.06
-      sum_of_robot_center_projection_on_X_Y_axis: 0.4335
-
-    use_stamped_vel: true
-    open_loop: true
-    enable_odom_tf: true
-    cmd_vel_timeout: 0.5
-    publish_rate: 50.0
-
-    linear:
-      x:
-        has_velocity_limits: true
-        max_velocity: 1.0
-        min_velocity: -1.0
-        has_acceleration_limits: true
-        max_acceleration: 1.0
-      y:
-        has_velocity_limits: true
-        max_velocity: 1.0
-        min_velocity: -1.0
-        has_acceleration_limits: true
-        max_acceleration: 1.0
-    angular:
-      z:
-        has_velocity_limits: true
-        max_velocity: 1.0
-        min_velocity: -1.0
-        has_acceleration_limits: true
-        max_acceleration: 1.0
-
-# -----------------------------------------------------
-# LID POSITION CONTROLLER
-# -----------------------------------------------------
-lid_controller:
+wheel_velocity_controller:
   ros__parameters:
     use_sim_time: true
     joints:
-      - "Lid_Joint"
-    interface_name: position
+      - "FL_Joint"
+      - "FR_Joint"
+      - "RL_Joint"
+      - "RR_Joint"
+    interface_name: velocity

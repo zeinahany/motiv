@@ -2,7 +2,7 @@
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import TwistStamped, PoseStamped
+from geometry_msgs.msg import Twist, PoseStamped
 from nav_msgs.msg import Odometry
 import math
 import time
@@ -40,17 +40,17 @@ class GoalSenderNode(Node):
         self.max_linear = 0.4
         self.max_angular = 0.6
 
-        # Subscriber: odometry from EKF or mecanum controller
+        # Subscriber: odometry from EKF or Gazebo bridge
         self.odom_sub = self.create_subscription(
             Odometry, '/odometry/filtered', self.odom_callback, 10)
 
-        # Fallback: also listen to controller odom
+        # Fallback: also listen to Gazebo odom
         self.odom_sub2 = self.create_subscription(
-            Odometry, '/mecanum_drive_controller/odom', self.odom_callback, 10)
+            Odometry, '/odom', self.odom_callback, 10)
 
         # Publisher: velocity commands
         self.cmd_pub = self.create_publisher(
-            TwistStamped, '/mecanum_drive_controller/cmd_vel', 10)
+            Twist, '/cmd_vel', 10)
 
         # Goal status publisher for visualization
         self.goal_pub = self.create_publisher(PoseStamped, '/current_goal', 10)
@@ -123,18 +123,14 @@ class GoalSenderNode(Node):
             vx *= 0.3
             vy *= 0.3
 
-        cmd = TwistStamped()
-        cmd.header.stamp = self.get_clock().now().to_msg()
-        cmd.header.frame_id = 'RobotBody'
-        cmd.twist.linear.x = vx
-        cmd.twist.linear.y = vy
-        cmd.twist.angular.z = wz
+        cmd = Twist()
+        cmd.linear.x = vx
+        cmd.linear.y = vy
+        cmd.angular.z = wz
         self.cmd_pub.publish(cmd)
 
     def _stop(self):
-        cmd = TwistStamped()
-        cmd.header.stamp = self.get_clock().now().to_msg()
-        cmd.header.frame_id = 'RobotBody'
+        cmd = Twist()
         self.cmd_pub.publish(cmd)
 
     @staticmethod

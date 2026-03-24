@@ -5,7 +5,7 @@ set(mobile_robot_sim_BUILD_DEPENDS "rclpy" "std_msgs" "sensor_msgs" "geometry_ms
 set(mobile_robot_sim_BUILDTOOL_DEPENDS "ament_cmake")
 set(mobile_robot_sim_BUILD_EXPORT_DEPENDS "rclpy" "std_msgs" "sensor_msgs" "geometry_msgs" "nav_msgs" "std_srvs")
 set(mobile_robot_sim_BUILDTOOL_EXPORT_DEPENDS )
-set(mobile_robot_sim_EXEC_DEPENDS "robot_state_publisher" "xacro" "ros_gz_sim" "ros_gz_bridge" "controller_manager" "joint_state_broadcaster" "mecanum_drive_controller" "position_controllers" "robot_localization" "rclpy" "std_msgs" "sensor_msgs" "geometry_msgs" "nav_msgs" "std_srvs")
+set(mobile_robot_sim_EXEC_DEPENDS "robot_state_publisher" "xacro" "ros_gz_sim" "ros_gz_bridge" "controller_manager" "joint_state_broadcaster" "velocity_controllers" "position_controllers" "gz_ros2_control" "robot_localization" "rclpy" "std_msgs" "sensor_msgs" "geometry_msgs" "nav_msgs" "std_srvs")
 set(mobile_robot_sim_TEST_DEPENDS "ament_lint_auto" "ament_lint_common")
 set(mobile_robot_sim_GROUP_DEPENDS )
 set(mobile_robot_sim_MEMBER_OF_GROUPS )

@@ -2,16 +2,15 @@
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import TwistStamped, Twist
+from geometry_msgs.msg import Twist
 from std_msgs.msg import Float64MultiArray
-import math
 
 
 class MecanumDriveNode(Node):
     """
-    Subscribes to /cmd_vel (Twist or TwistStamped).
+    Subscribes to /cmd_vel (Twist).
     Converts (vx, vy, wz) to 4 individual wheel velocities using mecanum kinematics.
-    Publishes wheel velocity commands.
+    Publishes as Float64MultiArray to /wheel_velocity_controller/commands.
     """
 
     def __init__(self):
@@ -22,42 +21,19 @@ class MecanumDriveNode(Node):
         # lx + ly = half-wheelbase-x + half-wheelbase-y = 0.1975 + 0.236 = 0.4335
         self.lx_plus_ly = 0.4335
 
-        # Subscribe to cmd_vel (TwistStamped for mecanum_drive_controller compatibility)
-        self.sub_stamped = self.create_subscription(
-            TwistStamped, '/mecanum_drive_controller/cmd_vel',
-            self.cmd_vel_stamped_callback, 10)
-
-        # Also subscribe to plain Twist on /cmd_vel for external tools
+        # Subscribe to plain Twist on /cmd_vel
         self.sub_twist = self.create_subscription(
             Twist, '/cmd_vel', self.cmd_vel_callback, 10)
 
-        # Publish individual wheel velocity commands
-        self.pub_fl = self.create_publisher(Float64MultiArray, '/fl_wheel_controller/commands', 10)
-        self.pub_fr = self.create_publisher(Float64MultiArray, '/fr_wheel_controller/commands', 10)
-        self.pub_rl = self.create_publisher(Float64MultiArray, '/rl_wheel_controller/commands', 10)
-        self.pub_rr = self.create_publisher(Float64MultiArray, '/rr_wheel_controller/commands', 10)
-
-        # Forward plain cmd_vel as stamped to the mecanum controller
-        self.pub_cmd_stamped = self.create_publisher(
-            TwistStamped, '/mecanum_drive_controller/cmd_vel', 10)
+        # Publish wheel velocities to JointGroupVelocityController
+        # Order must match joints list in controllers.yaml: FL, FR, RL, RR
+        self.pub_wheels = self.create_publisher(
+            Float64MultiArray, '/wheel_velocity_controller/commands', 10)
 
         self.get_logger().info('Mecanum Drive Node started.')
 
     def cmd_vel_callback(self, msg: Twist):
-        """Convert plain Twist to TwistStamped and forward."""
-        stamped = TwistStamped()
-        stamped.header.stamp = self.get_clock().now().to_msg()
-        stamped.header.frame_id = 'RobotBody'
-        stamped.twist = msg
-        self.pub_cmd_stamped.publish(stamped)
         self._compute_and_publish(msg.linear.x, msg.linear.y, msg.angular.z)
-
-    def cmd_vel_stamped_callback(self, msg: TwistStamped):
-        """Handle TwistStamped directly."""
-        self._compute_and_publish(
-            msg.twist.linear.x,
-            msg.twist.linear.y,
-            msg.twist.angular.z)
 
     def _compute_and_publish(self, vx: float, vy: float, wz: float):
         """
@@ -70,16 +46,19 @@ class MecanumDriveNode(Node):
         r = self.wheel_radius
         k = self.lx_plus_ly
 
+        # NOTE: FR and RR are negated because in the URDF the right-side
+        # wheel joints have axis [0,0,1] (maps to -Y in parent frame),
+        # opposite to the left-side [0,0,-1] (maps to +Y).  A positive
+        # velocity command on the right side therefore spins the wheel
+        # backward; negating corrects for this.
         w_fl = (1.0 / r) * (vx - vy - k * wz)
-        w_fr = (1.0 / r) * (vx + vy + k * wz)
+        w_fr = -(1.0 / r) * (vx + vy + k * wz)
         w_rl = (1.0 / r) * (vx + vy - k * wz)
-        w_rr = (1.0 / r) * (vx - vy + k * wz)
+        w_rr = -(1.0 / r) * (vx - vy + k * wz)
 
-        for pub, vel in [(self.pub_fl, w_fl), (self.pub_fr, w_fr),
-                         (self.pub_rl, w_rl), (self.pub_rr, w_rr)]:
-            cmd = Float64MultiArray()
-            cmd.data = [vel]
-            pub.publish(cmd)
+        cmd = Float64MultiArray()
+        cmd.data = [w_fl, w_fr, w_rl, w_rr]
+        self.pub_wheels.publish(cmd)
 
 
 def main(args=None):

@@ -1,0 +1,2 @@
+Invoking command in '/home/zeinazz/design_ws/build/mobile_robot_sim': /usr/bin/cmake --build /home/zeinazz/design_ws/build/mobile_robot_sim -- -j20 -l20
+Invoked command in '/home/zeinazz/design_ws/build/mobile_robot_sim' returned '2': /usr/bin/cmake --build /home/zeinazz/design_ws/build/mobile_robot_sim -- -j20 -l20

@@ -6,6 +6,7 @@
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RL_Wheel.STL
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RR_Wheel.STL
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RobotBody.STL
+/home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/launch/__pycache__/robot_gazebo.launch.cpython-312.pyc
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/launch/display.launch
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/launch/gazebo.launch
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/launch/robot_gazebo.launch.py
@@ -20,6 +21,7 @@
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/start_stop_node.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_cmd_vel.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_lid.py
+/home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_movements.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_obstacle.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/obstacle_avoidance.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/mecanum_drive_node.py
@@ -29,6 +31,7 @@
 /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/test_cmd_vel.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/test_lid.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/test_obstacle.py
+/home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/test_movements.py
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/ament_index/resource_index/package_run_dependencies/mobile_robot_sim
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/ament_index/resource_index/parent_prefix_path/mobile_robot_sim
 /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/environment/ament_prefix_path.sh

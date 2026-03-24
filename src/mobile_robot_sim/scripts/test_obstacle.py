@@ -8,7 +8,7 @@ that the obstacle avoidance node is responding correctly.
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import Twist
 import numpy as np
 
 
@@ -35,7 +35,7 @@ class TestObstacle(Node):
 
         # Drive forward to test obstacle detection
         self.cmd_pub = self.create_publisher(
-            TwistStamped, '/mecanum_drive_controller/cmd_vel', 10)
+            Twist, '/cmd_vel', 10)
 
         self.timer = self.create_timer(0.5, self.monitor_loop)
         self.drive_timer = self.create_timer(0.1, self.drive_loop)
@@ -69,16 +69,12 @@ class TestObstacle(Node):
         if self.distances['front'] < 0.3:
             self.get_logger().info('Obstacle too close! Stopping.')
             self.test_active = False
-            cmd = TwistStamped()
-            cmd.header.stamp = self.get_clock().now().to_msg()
-            cmd.header.frame_id = 'RobotBody'
+            cmd = Twist()
             self.cmd_pub.publish(cmd)
             return
 
-        cmd = TwistStamped()
-        cmd.header.stamp = self.get_clock().now().to_msg()
-        cmd.header.frame_id = 'RobotBody'
-        cmd.twist.linear.x = 0.2
+        cmd = Twist()
+        cmd.linear.x = 0.2
         self.cmd_pub.publish(cmd)
 
 

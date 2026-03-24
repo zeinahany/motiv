@@ -2,7 +2,7 @@
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import Twist
 from std_srvs.srv import SetBool
 
 
@@ -13,7 +13,7 @@ class StartStopNode(Node):
     - false: disable the robot (publish zero velocity, block commands)
 
     Sits between goal_sender / obstacle_avoidance and the mecanum controller.
-    Subscribes to /cmd_vel_input and republishes on /mecanum_drive_controller/cmd_vel
+    Subscribes to /cmd_vel_input and republishes on /cmd_vel
     only when enabled.
     """
 
@@ -28,12 +28,12 @@ class StartStopNode(Node):
 
         # Input velocity (from goal sender or obstacle avoidance)
         self.sub = self.create_subscription(
-            TwistStamped, '/cmd_vel_input',
+            Twist, '/cmd_vel_input',
             self.cmd_vel_callback, 10)
 
         # Output velocity to controller
         self.pub = self.create_publisher(
-            TwistStamped, '/mecanum_drive_controller/cmd_vel', 10)
+            Twist, '/cmd_vel', 10)
 
         # Safety timer: if disabled, keep publishing zero
         self.timer = self.create_timer(0.1, self.safety_loop)
@@ -51,8 +51,11 @@ class StartStopNode(Node):
             self._stop()
         return response
 
-    def cmd_vel_callback(self, msg: TwistStamped):
+    def cmd_vel_callback(self, msg: Twist):
         if self.enabled:
+            # Negate angular.z: our robot's +Y=right (CAD) vs plugin's +Y=left (ROS),
+            # L/R joint swap compensates strafe but also inverts rotation sign.
+            msg.angular.z = -msg.angular.z
             self.pub.publish(msg)
 
     def safety_loop(self):
@@ -60,9 +63,7 @@ class StartStopNode(Node):
             self._stop()
 
     def _stop(self):
-        cmd = TwistStamped()
-        cmd.header.stamp = self.get_clock().now().to_msg()
-        cmd.header.frame_id = 'RobotBody'
+        cmd = Twist()
         self.pub.publish(cmd)
 
 

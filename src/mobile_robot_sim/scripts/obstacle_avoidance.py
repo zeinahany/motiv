@@ -3,7 +3,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import Twist
 import numpy as np
 import time
 
@@ -37,11 +37,11 @@ class ObstacleAvoidance(Node):
 
         # 2. Subscribe to incoming velocity commands
         self.cmd_input_sub = self.create_subscription(
-            TwistStamped, '/cmd_vel_nav', self.nav_cmd_callback, 10)
+            Twist, '/cmd_vel_nav', self.nav_cmd_callback, 10)
         self.nav_cmd = None
 
-        # 3. Publish to the Mecanum Controller
-        self.publisher = self.create_publisher(TwistStamped, '/mecanum_drive_controller/cmd_vel', 10)
+        # 3. Publish velocity commands (mecanum_drive_node subscribes to /cmd_vel)
+        self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # 4. Create a timer to run the control loop 10 times a second (10 Hz)
         self.timer = self.create_timer(0.1, self.control_loop)
@@ -69,14 +69,12 @@ class ObstacleAvoidance(Node):
     def left_callback(self, msg):  self.dist_left = self.get_min_range(msg)
     def right_callback(self, msg): self.dist_right = self.get_min_range(msg)
 
-    def nav_cmd_callback(self, msg: TwistStamped):
+    def nav_cmd_callback(self, msg: Twist):
         self.nav_cmd = msg
 
     # --- The Brain (Control Logic) ---
     def control_loop(self):
-        cmd = TwistStamped()
-        cmd.header.stamp = self.get_clock().now().to_msg()
-        cmd.header.frame_id = "RobotBody"
+        cmd = Twist()
 
         # Base speeds
         linear_x = 0.0
@@ -130,9 +128,9 @@ class ObstacleAvoidance(Node):
         else:
             # Path clear - use navigation command if available, else move forward
             if self.nav_cmd is not None:
-                linear_x = self.nav_cmd.twist.linear.x
-                linear_y = self.nav_cmd.twist.linear.y
-                angular_z = self.nav_cmd.twist.angular.z
+                linear_x = self.nav_cmd.linear.x
+                linear_y = self.nav_cmd.linear.y
+                angular_z = self.nav_cmd.angular.z
             else:
                 linear_x = 0.3
 

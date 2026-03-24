@@ -1,0 +1,79 @@
+[0.009s] Invoking command in '/home/zeinazz/design_ws/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/zeinazz/design_ws/src/mobile_robot_sim -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/zeinazz/design_ws/install/mobile_robot_sim
+[0.235s] -- The C compiler identification is GNU 13.3.0
+[1.207s] -- The CXX compiler identification is GNU 13.3.0
+[2.141s] -- Detecting C compiler ABI info
+[2.449s] -- Detecting C compiler ABI info - done
+[2.457s] -- Check for working C compiler: /usr/bin/cc - skipped
+[2.457s] -- Detecting C compile features
+[2.457s] -- Detecting C compile features - done
+[2.590s] -- Detecting CXX compiler ABI info
+[2.928s] -- Detecting CXX compiler ABI info - done
+[2.936s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.936s] -- Detecting CXX compile features
+[2.936s] -- Detecting CXX compile features - done
+[2.940s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[3.062s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[3.130s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[3.166s] -- Found ament_lint_auto: 0.17.3 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[3.270s] -- Added test 'copyright' to check source files copyright and LICENSE
+[3.273s] -- Added test 'flake8' to check Python code syntax and style conventions
+[3.273s] -- Configured 'flake8' exclude dirs and/or files: 
+[3.275s] -- Added test 'lint_cmake' to check CMake code style
+[3.275s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[3.277s] -- Added test 'xmllint' to check XML markup files
+[3.278s] -- Configuring done (3.3s)
+[3.280s] -- Generating done (0.0s)
+[3.282s] -- Build files have been written to: /home/zeinazz/design_ws/build/mobile_robot_sim
+[3.285s] Invoked command in '/home/zeinazz/design_ws/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/zeinazz/design_ws/src/mobile_robot_sim -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/zeinazz/design_ws/install/mobile_robot_sim
+[3.286s] Invoking command in '/home/zeinazz/design_ws/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/zeinazz/design_ws/build/mobile_robot_sim -- -j20 -l20
+[3.311s] Invoked command in '/home/zeinazz/design_ws/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/zeinazz/design_ws/build/mobile_robot_sim -- -j20 -l20
+[3.319s] Invoking command in '/home/zeinazz/design_ws/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/zeinazz/design_ws/build/mobile_robot_sim
+[3.325s] -- Install configuration: ""
+[3.325s] -- Execute custom install script
+[3.326s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/urdf/DeliveryRobot_2.csv
+[3.332s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/urdf/DeliveryRobot_2.urdf
+[3.338s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FL_Wheel.STL
+[3.344s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FR_Wheel.STL
+[3.350s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/Lid.STL
+[3.356s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RL_Wheel.STL
+[3.361s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RR_Wheel.STL
+[3.367s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RobotBody.STL
+[3.374s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/launch/display.launch
+[3.381s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/launch/gazebo.launch
+[3.387s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/launch/robot_gazebo.launch.py
+[3.393s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/config/controllers.yaml
+[3.398s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/config/ekf_config.yaml
+[3.404s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/config/joint_names_DeliveryRobot_2.0(URDF).yaml
+[3.411s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/world/my_world.sdf
+[3.417s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/goal_sender_node.py
+[3.423s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/lid_control_node.py
+[3.430s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/mecanum_drive_node.py
+[3.437s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/obstacle_avoidance.py
+[3.444s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/start_stop_node.py
+[3.450s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_cmd_vel.py
+[3.456s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_lid.py
+[3.463s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_obstacle.py
+[3.469s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/obstacle_avoidance.py
+[3.474s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/mecanum_drive_node.py
+[3.480s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/goal_sender_node.py
+[3.487s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/lid_control_node.py
+[3.492s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/start_stop_node.py
+[3.496s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/test_cmd_vel.py
+[3.501s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/test_lid.py
+[3.507s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/lib/mobile_robot_sim/test_obstacle.py
+[3.512s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/ament_index/resource_index/package_run_dependencies/mobile_robot_sim
+[3.517s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/ament_index/resource_index/parent_prefix_path/mobile_robot_sim
+[3.523s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/environment/ament_prefix_path.sh
+[3.529s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/environment/ament_prefix_path.dsv
+[3.534s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/environment/path.sh
+[3.541s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/environment/path.dsv
+[3.547s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.bash
+[3.555s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.sh
+[3.564s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.zsh
+[3.569s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.dsv
+[3.574s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/package.dsv
+[3.580s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/ament_index/resource_index/packages/mobile_robot_sim
+[3.586s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/cmake/mobile_robot_simConfig.cmake
+[3.592s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/cmake/mobile_robot_simConfig-version.cmake
+[3.599s] -- Symlinking: /home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/package.xml
+[3.606s] Invoked command in '/home/zeinazz/design_ws/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/zeinazz/design_ws/build/mobile_robot_sim

@@ -6,7 +6,7 @@ Cycles through: forward, strafe left, strafe right, rotate, diagonal, stop.
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import Twist
 import time
 
 
@@ -15,7 +15,7 @@ class TestCmdVel(Node):
         super().__init__('test_cmd_vel')
 
         self.pub = self.create_publisher(
-            TwistStamped, '/mecanum_drive_controller/cmd_vel', 10)
+            Twist, '/cmd_vel', 10)
 
         # Test sequence: (vx, vy, wz, duration_sec, description)
         self.tests = [
@@ -55,12 +55,10 @@ class TestCmdVel(Node):
         self._send(vx, vy, wz)
 
     def _send(self, vx, vy, wz):
-        cmd = TwistStamped()
-        cmd.header.stamp = self.get_clock().now().to_msg()
-        cmd.header.frame_id = 'RobotBody'
-        cmd.twist.linear.x = vx
-        cmd.twist.linear.y = vy
-        cmd.twist.angular.z = wz
+        cmd = Twist()
+        cmd.linear.x = vx
+        cmd.linear.y = vy
+        cmd.angular.z = wz
         self.pub.publish(cmd)
 
 

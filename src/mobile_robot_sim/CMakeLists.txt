@@ -25,6 +25,7 @@ install(
     scripts/test_cmd_vel.py
     scripts/test_lid.py
     scripts/test_obstacle.py
+    scripts/test_movements.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
