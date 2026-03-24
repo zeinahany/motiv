@@ -1,0 +1,1 @@
+/home/zeinazz/design_ws/src/mobile_robot_sim/scripts/start_stop_node.py
