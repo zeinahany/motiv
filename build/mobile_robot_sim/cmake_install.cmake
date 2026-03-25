@@ -57,6 +57,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/mobile_robot_sim" TYPE PROGRAM FILES
     "/home/nounou/motiv/src/mobile_robot_sim/scripts/obstacle_avoidance.py"
     "/home/nounou/motiv/src/mobile_robot_sim/scripts/obstacle_navigator.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/nav_mission.py"
     "/home/nounou/motiv/src/mobile_robot_sim/scripts/mecanum_drive_node.py"
     "/home/nounou/motiv/src/mobile_robot_sim/scripts/goal_sender_node.py"
     "/home/nounou/motiv/src/mobile_robot_sim/scripts/lid_control_node.py"

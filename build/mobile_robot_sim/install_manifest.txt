@@ -15,6 +15,7 @@
 /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config/controllers.yaml
 /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/world/my_world.sdf
 /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/obstacle_navigator.py
+/home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/nav_mission.py
 /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_cmd_vel.py
 /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/goal_sender_node.py
 /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_movements.py
@@ -26,6 +27,7 @@
 /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/obstacle_avoidance.py
 /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/obstacle_avoidance.py
 /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/obstacle_navigator.py
+/home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/nav_mission.py
 /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/mecanum_drive_node.py
 /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/goal_sender_node.py
 /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/lid_control_node.py

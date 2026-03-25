@@ -20,7 +20,7 @@ class StartStopNode(Node):
     def __init__(self):
         super().__init__('start_stop_node')
 
-        self.enabled = False
+        self.enabled = True
 
         # Service
         self.srv = self.create_service(

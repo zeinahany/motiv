@@ -19,6 +19,7 @@ install(
   PROGRAMS
     scripts/obstacle_avoidance.py
     scripts/obstacle_navigator.py
+    scripts/nav_mission.py
     scripts/mecanum_drive_node.py
     scripts/goal_sender_node.py
     scripts/lid_control_node.py

@@ -1,208 +1,313 @@
 #!/usr/bin/env python3
 """
-Obstacle Navigator Node
------------------------
-Drives the mecanum robot forward while using the 4 ultrasonic sensors
-(front, back, left, right) to detect static obstacles (tables, shelves, etc.)
-and the IMU to track heading.  When an obstacle is detected within the
-safety threshold the robot stops, decides on an evasive direction based on
-which sensors are clear, strafes or rotates around the obstacle, then
-resumes forward motion.
+Obstacle Navigator – True Mecanum Holonomic Navigation
+------------------------------------------------------
+Empirically calibrated.  The MecanumDrive odom frame starts at (0,0,yaw=0)
+aligned with the robot body: odom +x = forward (world +Y at spawn),
+odom +y = left (world -X at spawn).
 
-Sensors (LaserScan, min 0.12 m, max 10 m, 5 rays ±15°):
-    /ultrasonic/front   – forward-facing
-    /ultrasonic/back    – rear-facing
-    /ultrasonic/left    – left-facing
-    /ultrasonic/right   – right-facing
+Waypoints are pre-computed in the odom frame:
+  odom_x = world_y,  odom_y = -world_x
 
-IMU (sensor_msgs/Imu):
-    /imu                – orientation & angular velocity
+The robot drives toward each waypoint using pure body-frame vx/vy
+commands — no rotation needed.  Obstacle avoidance adds small
+repulsive body-frame velocities from the four ultrasonic sensors.
 
-Actuator:
-    /cmd_vel            – geometry_msgs/Twist  (mecanum holonomic)
-
-Service:
-    /robot_enable       – std_srvs/SetBool  (must be called True first)
+Route: marker 2 → marker 3 → marker 1 → start (brown).
 """
 
 import math
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import LaserScan, Imu
+from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
+from nav_msgs.msg import Odometry
 from std_srvs.srv import SetBool
 
 
 class ObstacleNavigator(Node):
 
-    # ---------- tunables ----------
-    OBSTACLE_DIST = 0.50       # metres – stop if anything closer
-    SLOW_DIST = 0.90           # metres – reduce speed in this zone
-    FORWARD_SPEED = 0.8        # m/s cruise
-    STRAFE_SPEED = 0.6         # m/s lateral dodge
-    ROTATE_SPEED = 1.2         # rad/s turning
-    TIMER_PERIOD = 0.1         # 10 Hz control loop
+    # Commanded speed (actual speed ≈ 15-20% of this due to physics)
+    MAX_SPEED    = 3.0
+    TIMER_PERIOD = 0.05     # 20 Hz
+
+    GOAL_TOL     = 0.15     # m – centered on the 0.4m-radius circle
+    SLOW_RADIUS  = 0.6      # m – begin decelerating
+    AXIS_TOL     = 0.20     # m – switch to next axis when primary < this
+
+    OBS_HARD     = 0.30     # m – full stop
+    OBS_SOFT     = 0.80     # m – begin repulsion
+    REP_GAIN     = 1.5      # repulsion strength (body frame)
+
+    DWELL_TICKS  = 60       # 3 s at 20 Hz
+
+    STUCK_WINDOW  = 300     # 15 s
+    STUCK_THRESH  = 260
+    REROUTE_TICKS = 60
+
+    # Waypoints in ODOM frame (pre-computed from world coords)
+    # World→Odom transform: odom_x = world_y, odom_y = -world_x
+    # (robot spawns at world origin facing +Y, odom starts at (0,0,yaw=0))
+    WAYPOINTS = [
+        ( 1.5,   0.0),   # marker 2: world ( 0.0,  1.5) – straight ahead
+        ( 0.5,  -2.0),   # marker 3: world ( 2.0,  0.5)
+        (-1.0,   2.0),   # marker 1: world (-2.0, -1.0)
+        ( 0.0,   0.0),   # start:    world ( 0.0,  0.0)
+    ]
 
     def __init__(self):
         super().__init__('obstacle_navigator')
 
-        # --- latest range per direction (initialise to "far away") ---
-        self.range_front = float('inf')
-        self.range_back = float('inf')
-        self.range_left = float('inf')
-        self.range_right = float('inf')
+        self.px = 0.0
+        self.py = 0.0
+        self.yaw = 0.0
+        self._got_odom = False
 
-        # --- IMU state ---
-        self.yaw = 0.0          # radians, integrated from gyro_z
-        self.last_imu_time = None
+        self.rf = float('inf')
+        self.rb = float('inf')
+        self.rl = float('inf')
+        self.rr = float('inf')
 
-        # --- subscribers ---
-        self.create_subscription(LaserScan, '/ultrasonic/front',
-                                 self._cb_front, 10)
-        self.create_subscription(LaserScan, '/ultrasonic/back',
-                                 self._cb_back, 10)
-        self.create_subscription(LaserScan, '/ultrasonic/left',
-                                 self._cb_left, 10)
-        self.create_subscription(LaserScan, '/ultrasonic/right',
-                                 self._cb_right, 10)
-        self.create_subscription(Imu, '/imu', self._cb_imu, 10)
+        self._wi = 0
+        self._done = False
+        self._dwell = 0
+        self._hist = []
+        self._reroute = 0
+        self._rdir = 1.0
+        self._logc = 0
 
-        # --- publisher ---
-        self.cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.create_subscription(Odometry,  '/odom',             self._odom_cb, 10)
+        self.create_subscription(LaserScan, '/ultrasonic/front', self._f_cb, 10)
+        self.create_subscription(LaserScan, '/ultrasonic/back',  self._b_cb, 10)
+        self.create_subscription(LaserScan, '/ultrasonic/left',  self._l_cb, 10)
+        self.create_subscription(LaserScan, '/ultrasonic/right', self._r_cb, 10)
 
-        # --- enable the robot via service ---
-        self.enable_client = self.create_client(SetBool, '/robot_enable')
-        self._enable_robot()
+        self.pub = self.create_publisher(Twist, '/cmd_vel', 10)
 
-        # --- control loop ---
-        self.create_timer(self.TIMER_PERIOD, self._control_loop)
+        self.cli = self.create_client(SetBool, '/robot_enable')
+        self._enable()
 
-        self.get_logger().info('Obstacle Navigator started – waiting for sensor data …')
+        self.create_timer(self.TIMER_PERIOD, self._loop)
+        wp = self.WAYPOINTS[0]
+        self.get_logger().info(
+            f'Nav started – WP1 odom({wp[0]:.1f},{wp[1]:.1f})')
 
-    # ------------------------------------------------------------------ #
-    #  Service helper                                                     #
-    # ------------------------------------------------------------------ #
-    def _enable_robot(self):
-        """Call /robot_enable True so the start_stop_node lets motion through."""
-        if not self.enable_client.wait_for_service(timeout_sec=5.0):
-            self.get_logger().warn('/robot_enable service not available – continuing anyway')
+    def _enable(self):
+        if not self.cli.wait_for_service(timeout_sec=5.0):
             return
-        req = SetBool.Request()
-        req.data = True
-        future = self.enable_client.call_async(req)
-        future.add_done_callback(
-            lambda f: self.get_logger().info('Robot enabled ✓')
-            if f.result() is not None else None)
+        req = SetBool.Request(); req.data = True
+        self.cli.call_async(req)
 
-    # ------------------------------------------------------------------ #
-    #  Sensor callbacks                                                   #
-    # ------------------------------------------------------------------ #
+    # ---- sensor callbacks -------------------------------------------- #
+    def _odom_cb(self, m):
+        self.px = m.pose.pose.position.x
+        self.py = m.pose.pose.position.y
+        q = m.pose.pose.orientation
+        self.yaw = math.atan2(2*(q.w*q.z + q.x*q.y),
+                              1 - 2*(q.y*q.y + q.z*q.z))
+        self._got_odom = True
+
     @staticmethod
-    def _min_range(msg: LaserScan) -> float:
-        """Return the minimum valid range from a LaserScan message."""
-        valid = [r for r in msg.ranges
-                 if msg.range_min <= r <= msg.range_max]
-        return min(valid) if valid else float('inf')
+    def _mr(m):
+        v = [r for r in m.ranges if m.range_min <= r <= m.range_max]
+        return min(v) if v else float('inf')
 
-    def _cb_front(self, msg):
-        self.range_front = self._min_range(msg)
+    def _f_cb(self, m): self.rf = self._mr(m)
+    def _b_cb(self, m): self.rb = self._mr(m)
+    def _l_cb(self, m): self.rl = self._mr(m)
+    def _r_cb(self, m): self.rr = self._mr(m)
 
-    def _cb_back(self, msg):
-        self.range_back = self._min_range(msg)
+    # ---- helpers ----------------------------------------------------- #
+    def _wp(self):
+        return self.WAYPOINTS[self._wi]
 
-    def _cb_left(self, msg):
-        self.range_left = self._min_range(msg)
+    def _dist(self):
+        w = self._wp()
+        return math.hypot(w[0] - self.px, w[1] - self.py)
 
-    def _cb_right(self, msg):
-        self.range_right = self._min_range(msg)
+    def _rep(self, d):
+        if d >= self.OBS_SOFT: return 0.0
+        if d <= self.OBS_HARD: return 1.0
+        return (self.OBS_SOFT - d) / (self.OBS_SOFT - self.OBS_HARD)
 
-    def _cb_imu(self, msg: Imu):
-        """Integrate gyroscope Z to track yaw heading."""
-        now = self.get_clock().now()
-        if self.last_imu_time is not None:
-            dt = (now - self.last_imu_time).nanoseconds * 1e-9
-            self.yaw += msg.angular_velocity.z * dt
-            # keep in [-π, π]
-            self.yaw = math.atan2(math.sin(self.yaw), math.cos(self.yaw))
-        self.last_imu_time = now
+    def _odom_to_body(self, ox, oy):
+        """Transform odom-frame vector into robot body frame."""
+        c = math.cos(self.yaw)
+        s = math.sin(self.yaw)
+        bx =  c * ox + s * oy
+        by = -s * ox + c * oy
+        return bx, by
 
-    # ------------------------------------------------------------------ #
-    #  Main control loop                                                  #
-    # ------------------------------------------------------------------ #
-    def _control_loop(self):
-        twist = Twist()
+    def _record(self, ev):
+        self._hist.append(ev)
+        if len(self._hist) > self.STUCK_WINDOW:
+            self._hist.pop(0)
 
-        f = self.range_front
-        b = self.range_back
-        l = self.range_left
-        r = self.range_right
+    def _stuck(self):
+        return (len(self._hist) >= self.STUCK_WINDOW and
+                sum(self._hist) >= self.STUCK_THRESH)
 
-        front_blocked = f < self.OBSTACLE_DIST
-        left_blocked = l < self.OBSTACLE_DIST
-        right_blocked = r < self.OBSTACLE_DIST
+    # ================================================================== #
+    def _loop(self):
+        if self._done or not self._got_odom:
+            return
 
-        front_slow = f < self.SLOW_DIST
+        dist = self._dist()
 
-        # Log current distances every ~1 s (every 10th tick)
-        if hasattr(self, '_log_cnt'):
-            self._log_cnt += 1
-        else:
-            self._log_cnt = 0
-        if self._log_cnt % 10 == 0:
+        # --- periodic log ---
+        self._logc += 1
+        if self._logc % 20 == 0:
+            w = self._wp()
             self.get_logger().info(
-                f'Ranges  F:{f:.2f}  B:{b:.2f}  L:{l:.2f}  R:{r:.2f}  '
-                f'Yaw:{math.degrees(self.yaw):.1f}°')
+                f'WP{self._wi+1}/{len(self.WAYPOINTS)} '
+                f'tgt=({w[0]:.2f},{w[1]:.2f}) '
+                f'pos=({self.px:.2f},{self.py:.2f}) '
+                f'd={dist:.2f} yaw={math.degrees(self.yaw):.0f}° '
+                f'F:{self.rf:.2f} B:{self.rb:.2f} '
+                f'L:{self.rl:.2f} R:{self.rr:.2f}')
 
-        # ---- decision tree ----
-
-        if front_blocked and left_blocked and right_blocked:
-            # boxed in on three sides → reverse
-            twist.linear.x = -self.FORWARD_SPEED
-            self.get_logger().info('REVERSE – boxed in')
-
-        elif front_blocked:
-            # obstacle ahead → pick a free side to strafe
-            if not right_blocked and (right_blocked == left_blocked or r > l):
-                # strafe right (positive y in our frame is right)
-                twist.linear.y = self.STRAFE_SPEED
+        # --- dwell (parked on circle) ---
+        if self._dwell > 0:
+            self._dwell -= 1
+            self.pub.publish(Twist())
+            if self._dwell == 0:
+                self._wi += 1
+                self._hist.clear()
+                self._reroute = 0
+                if self._wi >= len(self.WAYPOINTS):
+                    self.get_logger().info('=== MISSION COMPLETE ===')
+                    self._done = True
+                    return
+                nw = self.WAYPOINTS[self._wi]
                 self.get_logger().info(
-                    f'STRAFE RIGHT – front obstacle at {f:.2f} m')
-            elif not left_blocked:
-                # strafe left
-                twist.linear.y = -self.STRAFE_SPEED
-                self.get_logger().info(
-                    f'STRAFE LEFT – front obstacle at {f:.2f} m')
+                    f'  Next WP{self._wi+1} odom({nw[0]:.2f},{nw[1]:.2f})')
+            return
+
+        # --- reached waypoint? ---
+        if dist < self.GOAL_TOL:
+            w = self._wp()
+            self.get_logger().info(
+                f'>>> REACHED WP{self._wi+1} odom({w[0]:.2f},{w[1]:.2f})  '
+                f'err={dist:.3f}m')
+            self.pub.publish(Twist())
+            self._dwell = self.DWELL_TICKS
+            return
+
+        # --- reroute recovery ---
+        if self._reroute > 0:
+            self._reroute -= 1
+            tw = Twist()
+            p = self._reroute
+            d = self._rdir
+            if p > 55:
+                tw.linear.x = -1.5
+            elif p > 25:
+                tw.linear.y = d * 2.0
             else:
-                # both sides blocked → rotate in place
-                twist.angular.z = self.ROTATE_SPEED
-                self.get_logger().info(
-                    f'ROTATE – front obstacle at {f:.2f} m, sides blocked')
+                tw.linear.x = 2.0
+            self.pub.publish(tw)
+            if self._reroute == 0:
+                self._hist.clear()
+            return
 
-        elif left_blocked and not right_blocked:
-            # too close on the left → nudge right while moving forward
-            twist.linear.x = self.FORWARD_SPEED * 0.5
-            twist.linear.y = self.STRAFE_SPEED * 0.5
-            self.get_logger().info(
-                f'NUDGE RIGHT – left obstacle at {l:.2f} m')
+        # --- stuck? ---
+        if self._stuck():
+            self._rdir = 1.0 if self.rr > self.rl else -1.0
+            self.get_logger().info('STUCK – rerouting')
+            self._reroute = self.REROUTE_TICKS
+            self._hist.clear()
+            return
 
-        elif right_blocked and not left_blocked:
-            # too close on the right → nudge left while moving forward
-            twist.linear.x = self.FORWARD_SPEED * 0.5
-            twist.linear.y = -self.STRAFE_SPEED * 0.5
-            self.get_logger().info(
-                f'NUDGE LEFT – right obstacle at {r:.2f} m')
+        # ============================================================ #
+        #  SEQUENTIAL-AXIS NAVIGATION (one axis at a time)              #
+        # ============================================================ #
 
-        elif front_slow:
-            # approaching something – slow down
-            twist.linear.x = self.FORWARD_SPEED * 0.4
-            self.get_logger().info(
-                f'SLOW – obstacle ahead at {f:.2f} m')
+        w = self._wp()
+        dx = w[0] - self.px   # odom-frame X error
+        dy = w[1] - self.py   # odom-frame Y error
 
+        # Speed ramps down near goal for precise centering
+        speed = self.MAX_SPEED
+        if dist < self.SLOW_RADIUS:
+            speed *= max(0.15, dist / self.SLOW_RADIUS)
+
+        # Move one axis at a time: correct the bigger axis first,
+        # then the smaller axis, then fine direct approach.
+        if abs(dx) >= self.AXIS_TOL and abs(dx) >= abs(dy):
+            # Phase A: drive forward/backward only
+            ox_goal = speed if dx > 0 else -speed
+            oy_goal = 0.0
+        elif abs(dy) >= self.AXIS_TOL:
+            # Phase B: strafe left/right only
+            ox_goal = 0.0
+            oy_goal = speed if dy > 0 else -speed
+        elif abs(dx) >= self.AXIS_TOL:
+            # Remaining X after Y done
+            ox_goal = speed if dx > 0 else -speed
+            oy_goal = 0.0
         else:
-            # all clear → cruise forward
-            twist.linear.x = self.FORWARD_SPEED
+            # Fine approach: direct vector for last few cm
+            mag = math.hypot(dx, dy)
+            if mag > 0.001:
+                ox_goal = (dx / mag) * speed
+                oy_goal = (dy / mag) * speed
+            else:
+                ox_goal = oy_goal = 0.0
 
-        self.cmd_pub.publish(twist)
+        # Transform odom-frame command to body frame
+        gvx, gvy = self._odom_to_body(ox_goal, oy_goal)
+
+        # 2) Obstacle avoidance (body frame)
+        rep_f = self._rep(self.rf)
+        rep_b = self._rep(self.rb)
+        rep_l = self._rep(self.rl)
+        rep_r = self._rep(self.rr)
+
+        # Fade repulsion near goal so robot commits to the circle
+        if dist < 0.4:
+            fade = max(0.05, dist / 0.4)
+            rep_f *= fade; rep_b *= fade
+            rep_l *= fade; rep_r *= fade
+
+        # Hard stop: if moving toward an obstacle that is very close,
+        # zero out the goal velocity on that axis
+        if rep_f > 0.7 and gvx > 0:    # obstacle ahead & driving forward
+            gvx = 0.0
+        if rep_b > 0.7 and gvx < 0:    # obstacle behind & reversing
+            gvx = 0.0
+        if rep_l > 0.7 and gvy > 0:    # obstacle left & strafing left
+            gvy = 0.0
+        if rep_r > 0.7 and gvy < 0:    # obstacle right & strafing right
+            gvy = 0.0
+
+        rvx = self.REP_GAIN * (-rep_f + rep_b)
+        rvy = self.REP_GAIN * (-rep_l + rep_r)
+
+        # Dodge sideways when obstacle ahead
+        if rep_f > 0.3:
+            side = 1.0 if self.rr > self.rl else -1.0
+            rvy += self.REP_GAIN * rep_f * 0.6 * side
+        if rep_b > 0.3:
+            side = 1.0 if self.rr > self.rl else -1.0
+            rvy += self.REP_GAIN * rep_b * 0.4 * side
+
+        # 3) Combine
+        vx = gvx + rvx
+        vy = gvy + rvy
+
+        # Clamp
+        spd = math.hypot(vx, vy)
+        if spd > self.MAX_SPEED:
+            sc = self.MAX_SPEED / spd
+            vx *= sc; vy *= sc
+
+        tw = Twist()
+        tw.linear.x = vx
+        tw.linear.y = vy
+        self.pub.publish(tw)
+
+        # Only count as evasive when obstacle repulsion is dominant
+        self._record(max(rep_f, rep_l, rep_r) > 0.5)
 
 
 def main(args=None):
@@ -211,9 +316,8 @@ def main(args=None):
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
-        # stop the robot before shutting down
-        node.cmd_pub.publish(Twist())
-        node.get_logger().info('Stopping robot …')
+        node.pub.publish(Twist())
+        node.get_logger().info('Stop')
     finally:
         node.destroy_node()
         rclpy.shutdown()

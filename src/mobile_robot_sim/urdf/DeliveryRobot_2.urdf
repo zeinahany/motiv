@@ -105,7 +105,7 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      effort="2"
+      effort="20"
       velocity="20" />
   </joint>
 
@@ -162,7 +162,7 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      effort="2"
+      effort="20"
       velocity="20" />
   </joint>
 
@@ -219,7 +219,7 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      effort="2"
+      effort="20"
       velocity="20" />
   </joint>
 
@@ -276,7 +276,7 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      effort="2"
+      effort="20"
       velocity="20" />
   </joint>
 
