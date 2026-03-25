@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, TimerAction
+from launch.actions import IncludeLaunchDescription, TimerAction, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -11,6 +11,16 @@ import os
 
 def generate_launch_description():
     pkg_share = FindPackageShare(package='mobile_robot_sim').find('mobile_robot_sim')
+
+    # Let Gazebo resolve package:// mesh URIs and model:// URIs
+    gz_resource_path = os.path.dirname(pkg_share)  # .../install/mobile_robot_sim/share
+    models_path = os.path.expanduser('~/gazebo_models/models')
+    existing = os.environ.get('GZ_SIM_RESOURCE_PATH', '')
+    paths = [gz_resource_path, models_path] + ([existing] if existing else [])
+    set_gz_resource_path = SetEnvironmentVariable(
+        name='GZ_SIM_RESOURCE_PATH',
+        value=':'.join(paths)
+    )
     default_model_path = os.path.join(pkg_share, 'urdf', 'DeliveryRobot_2.urdf')
     world_file_path = os.path.join(pkg_share, 'world', 'my_world.sdf')
     ekf_config_path = os.path.join(pkg_share, 'config', 'ekf_config.yaml')
@@ -105,6 +115,7 @@ def generate_launch_description():
     delay_start_stop = TimerAction(period=5.0, actions=[start_stop_node])
 
     return LaunchDescription([
+        set_gz_resource_path,
         gazebo,
         bridge_gz,
         node_gz_spawn_entity,

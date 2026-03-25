@@ -1,0 +1,87 @@
+[0.029s] Invoking command in '/home/nounou/motiv/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/nounou/motiv/src/mobile_robot_sim -DCMAKE_INSTALL_PREFIX=/home/nounou/motiv/install/mobile_robot_sim
+[0.561s] -- The C compiler identification is GNU 13.3.0
+[2.818s] -- The CXX compiler identification is GNU 13.3.0
+[4.748s] -- Detecting C compiler ABI info
+[5.470s] -- Detecting C compiler ABI info - done
+[5.483s] -- Check for working C compiler: /usr/bin/cc - skipped
+[5.484s] -- Detecting C compile features
+[5.485s] -- Detecting C compile features - done
+[5.802s] -- Detecting CXX compiler ABI info
+[6.628s] -- Detecting CXX compiler ABI info - done
+[6.642s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[6.642s] -- Detecting CXX compile features
+[6.643s] -- Detecting CXX compile features - done
+[6.699s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[7.027s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[7.328s] -- Found ament_lint_auto: 0.17.3 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[7.610s] -- Added test 'copyright' to check source files copyright and LICENSE
+[7.623s] -- Added test 'flake8' to check Python code syntax and style conventions
+[7.623s] -- Configured 'flake8' exclude dirs and/or files: 
+[7.627s] -- Added test 'lint_cmake' to check CMake code style
+[7.630s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[7.639s] -- Added test 'xmllint' to check XML markup files
+[7.647s] -- Configuring done (7.6s)
+[7.662s] -- Generating done (0.0s)
+[7.668s] -- Build files have been written to: /home/nounou/motiv/build/mobile_robot_sim
+[7.679s] Invoked command in '/home/nounou/motiv/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/nounou/motiv/src/mobile_robot_sim -DCMAKE_INSTALL_PREFIX=/home/nounou/motiv/install/mobile_robot_sim
+[7.681s] Invoking command in '/home/nounou/motiv/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/nounou/motiv/build/mobile_robot_sim -- -j16 -l16
+[7.779s] Invoked command in '/home/nounou/motiv/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/nounou/motiv/build/mobile_robot_sim -- -j16 -l16
+[7.801s] Invoking command in '/home/nounou/motiv/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/nounou/motiv/build/mobile_robot_sim
+[7.820s] -- Install configuration: ""
+[7.821s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/urdf
+[7.822s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/urdf/DeliveryRobot_2.urdf
+[7.823s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/urdf/DeliveryRobot_2.csv
+[7.823s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes
+[7.824s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FL_Wheel.STL
+[7.835s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RL_Wheel.STL
+[7.844s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FR_Wheel.STL
+[7.856s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/Lid.STL
+[7.859s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RR_Wheel.STL
+[7.871s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RobotBody.STL
+[7.966s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch
+[7.967s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/display.launch
+[7.968s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/gazebo.launch
+[7.968s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/__pycache__
+[7.969s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/__pycache__/robot_gazebo.launch.cpython-312.pyc
+[7.970s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/robot_gazebo.launch.py
+[7.970s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config
+[7.971s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config/ekf_config.yaml
+[7.971s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config/joint_names_DeliveryRobot_2.0(URDF).yaml
+[7.971s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config/controllers.yaml
+[7.972s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/world
+[7.972s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/world/my_world.sdf
+[7.973s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts
+[7.974s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_cmd_vel.py
+[7.974s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/goal_sender_node.py
+[7.974s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_movements.py
+[7.974s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_lid.py
+[7.975s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/lid_control_node.py
+[7.975s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/mecanum_drive_node.py
+[7.975s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/start_stop_node.py
+[7.976s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_obstacle.py
+[7.976s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/obstacle_avoidance.py
+[7.978s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/obstacle_avoidance.py
+[7.978s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/mecanum_drive_node.py
+[7.978s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/goal_sender_node.py
+[7.979s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/lid_control_node.py
+[7.979s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/start_stop_node.py
+[7.979s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_cmd_vel.py
+[7.980s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_lid.py
+[7.980s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_obstacle.py
+[7.980s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_movements.py
+[7.983s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/ament_index/resource_index/package_run_dependencies/mobile_robot_sim
+[7.984s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/ament_index/resource_index/parent_prefix_path/mobile_robot_sim
+[7.985s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/ament_prefix_path.sh
+[7.986s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/ament_prefix_path.dsv
+[7.986s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/path.sh
+[7.987s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/path.dsv
+[7.987s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.bash
+[7.987s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.sh
+[7.988s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.zsh
+[7.988s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.dsv
+[7.988s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/package.dsv
+[7.989s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/ament_index/resource_index/packages/mobile_robot_sim
+[7.990s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/cmake/mobile_robot_simConfig.cmake
+[7.991s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/cmake/mobile_robot_simConfig-version.cmake
+[7.991s] -- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/package.xml
+[7.996s] Invoked command in '/home/nounou/motiv/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/nounou/motiv/build/mobile_robot_sim

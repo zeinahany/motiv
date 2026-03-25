@@ -34,7 +34,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RobotBody.STL" />
+          filename="package://mobile_robot_sim/meshes/RobotBody.STL" />
       </geometry>
       <material
         name="">
@@ -75,7 +75,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RL_Wheel.STL" />
+          filename="package://mobile_robot_sim/meshes/RL_Wheel.STL" />
       </geometry>
       <material
         name="">
@@ -132,7 +132,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RR_Wheel.STL" />
+          filename="package://mobile_robot_sim/meshes/RR_Wheel.STL" />
       </geometry>
       <material
         name="">
@@ -189,7 +189,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FR_Wheel.STL" />
+          filename="package://mobile_robot_sim/meshes/FR_Wheel.STL" />
       </geometry>
       <material
         name="">
@@ -246,7 +246,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FL_Wheel.STL" />
+          filename="package://mobile_robot_sim/meshes/FL_Wheel.STL" />
       </geometry>
       <material
         name="">
@@ -363,7 +363,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///home/zeinazz/design_ws/install/mobile_robot_sim/share/mobile_robot_sim/meshes/Lid.STL" />
+          filename="package://mobile_robot_sim/meshes/Lid.STL" />
       </geometry>
       <material
         name="">
@@ -394,7 +394,7 @@
       xyz="0 0 -1" />
     <limit
       lower="0"
-      upper="0.18"
+      upper="0.14"
       effort="100"
       velocity="2" />
         <dynamics damping="0.5" friction="0.1" />

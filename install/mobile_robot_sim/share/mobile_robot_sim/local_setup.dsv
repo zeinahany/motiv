@@ -1,1 +1,2 @@
-/home/zeinazz/design_ws/build/mobile_robot_sim/ament_cmake_environment_hooks/local_setup.dsv
+source;share/mobile_robot_sim/environment/ament_prefix_path.sh
+source;share/mobile_robot_sim/environment/path.sh

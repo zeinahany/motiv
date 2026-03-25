@@ -1,0 +1,81 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Found ament_lint_auto: 0.17.3 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+-- Added test 'copyright' to check source files copyright and LICENSE
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Configured 'flake8' exclude dirs and/or files: 
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done (7.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/nounou/motiv/build/mobile_robot_sim
+-- Install configuration: ""
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/urdf
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/urdf/DeliveryRobot_2.urdf
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/urdf/DeliveryRobot_2.csv
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FL_Wheel.STL
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RL_Wheel.STL
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/FR_Wheel.STL
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/Lid.STL
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RR_Wheel.STL
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/meshes/RobotBody.STL
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/display.launch
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/gazebo.launch
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/__pycache__
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/__pycache__/robot_gazebo.launch.cpython-312.pyc
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/launch/robot_gazebo.launch.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config/ekf_config.yaml
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config/joint_names_DeliveryRobot_2.0(URDF).yaml
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/config/controllers.yaml
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/world
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/world/my_world.sdf
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_cmd_vel.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/goal_sender_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_movements.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_lid.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/lid_control_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/mecanum_drive_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/start_stop_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/test_obstacle.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/scripts/obstacle_avoidance.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/obstacle_avoidance.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/mecanum_drive_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/goal_sender_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/lid_control_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/start_stop_node.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_cmd_vel.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_lid.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_obstacle.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/lib/mobile_robot_sim/test_movements.py
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/ament_index/resource_index/package_run_dependencies/mobile_robot_sim
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/ament_index/resource_index/parent_prefix_path/mobile_robot_sim
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/ament_prefix_path.sh
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/ament_prefix_path.dsv
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/path.sh
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/environment/path.dsv
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.bash
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.sh
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.zsh
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/local_setup.dsv
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/package.dsv
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/ament_index/resource_index/packages/mobile_robot_sim
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/cmake/mobile_robot_simConfig.cmake
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/cmake/mobile_robot_simConfig-version.cmake
+-- Installing: /home/nounou/motiv/install/mobile_robot_sim/share/mobile_robot_sim/package.xml

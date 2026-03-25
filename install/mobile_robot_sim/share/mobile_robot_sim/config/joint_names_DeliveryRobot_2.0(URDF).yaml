@@ -1,1 +1,1 @@
-/home/zeinazz/design_ws/src/mobile_robot_sim/config/joint_names_DeliveryRobot_2.0(URDF).yaml
+controller_joint_names: ['', 'RL_Joint', 'RR_Joint', 'FR_Joint', 'FL_Joint', 'Lid_Joint', ]

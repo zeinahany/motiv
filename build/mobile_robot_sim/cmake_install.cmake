@@ -1,8 +1,8 @@
-# Install script for directory: /home/zeinazz/design_ws/src/mobile_robot_sim
+# Install script for directory: /home/nounou/motiv/src/mobile_robot_sim
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/zeinazz/design_ws/install/mobile_robot_sim")
+  set(CMAKE_INSTALL_PREFIX "/home/nounou/motiv/install/mobile_robot_sim")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,7 +43,88 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/zeinazz/design_ws/build/mobile_robot_sim/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim" TYPE DIRECTORY FILES
+    "/home/nounou/motiv/src/mobile_robot_sim/urdf"
+    "/home/nounou/motiv/src/mobile_robot_sim/meshes"
+    "/home/nounou/motiv/src/mobile_robot_sim/launch"
+    "/home/nounou/motiv/src/mobile_robot_sim/config"
+    "/home/nounou/motiv/src/mobile_robot_sim/world"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts"
+    )
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/mobile_robot_sim" TYPE PROGRAM FILES
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/obstacle_avoidance.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/obstacle_navigator.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/mecanum_drive_node.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/goal_sender_node.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/lid_control_node.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/start_stop_node.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/test_cmd_vel.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/test_lid.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/test_obstacle.py"
+    "/home/nounou/motiv/src/mobile_robot_sim/scripts/test_movements.py"
+    )
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/mobile_robot_sim")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/mobile_robot_sim")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim/environment" TYPE FILE FILES "/opt/ros/jazzy/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim/environment" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_environment_hooks/ament_prefix_path.dsv")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim/environment" TYPE FILE FILES "/opt/ros/jazzy/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim/environment" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_environment_hooks/path.dsv")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_environment_hooks/local_setup.bash")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_environment_hooks/local_setup.sh")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_environment_hooks/local_setup.zsh")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_environment_hooks/local_setup.dsv")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_environment_hooks/package.dsv")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_index/share/ament_index/resource_index/packages/mobile_robot_sim")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim/cmake" TYPE FILE FILES
+    "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_core/mobile_robot_simConfig.cmake"
+    "/home/nounou/motiv/build/mobile_robot_sim/ament_cmake_core/mobile_robot_simConfig-version.cmake"
+    )
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mobile_robot_sim" TYPE FILE FILES "/home/nounou/motiv/src/mobile_robot_sim/package.xml")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -54,5 +135,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zeinazz/design_ws/build/mobile_robot_sim/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/nounou/motiv/build/mobile_robot_sim/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

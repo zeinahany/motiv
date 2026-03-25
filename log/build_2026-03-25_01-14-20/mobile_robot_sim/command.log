@@ -1,0 +1,4 @@
+Invoking command in '/home/nounou/motiv/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/nounou/motiv/build/mobile_robot_sim -- -j16 -l16
+Invoked command in '/home/nounou/motiv/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/nounou/motiv/build/mobile_robot_sim -- -j16 -l16
+Invoking command in '/home/nounou/motiv/build/mobile_robot_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/nounou/motiv/build/mobile_robot_sim
+Invoked command in '/home/nounou/motiv/build/mobile_robot_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/nounou/motiv/build/mobile_robot_sim

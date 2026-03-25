@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/zeinazz/design_ws/src/mobile_robot_sim
+CMAKE_SOURCE_DIR = /home/nounou/motiv/src/mobile_robot_sim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/zeinazz/design_ws/build/mobile_robot_sim
+CMAKE_BINARY_DIR = /home/nounou/motiv/build/mobile_robot_sim
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/zeinazz/design_ws/build/mobile_robot_sim && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/zeinazz/design_ws/src/mobile_robot_sim /home/zeinazz/design_ws/src/mobile_robot_sim /home/zeinazz/design_ws/build/mobile_robot_sim /home/zeinazz/design_ws/build/mobile_robot_sim /home/zeinazz/design_ws/build/mobile_robot_sim/CMakeFiles/uninstall.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/nounou/motiv/build/mobile_robot_sim && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nounou/motiv/src/mobile_robot_sim /home/nounou/motiv/src/mobile_robot_sim /home/nounou/motiv/build/mobile_robot_sim /home/nounou/motiv/build/mobile_robot_sim /home/nounou/motiv/build/mobile_robot_sim/CMakeFiles/uninstall.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/uninstall.dir/depend
 
